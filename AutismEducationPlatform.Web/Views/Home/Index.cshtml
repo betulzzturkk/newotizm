@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="hero-section text-center">
+    <div class="container">
+        <div class="hero-title animate__animated animate__fadeInDown">
+            <div class="swing-text">
+                Otizm Eğitim Platformuna<br>
+                Hoş Geldiniz
+            </div>
+        </div>
+        <div class="hero-subtitle animate__animated animate__fadeInUp">
+            <div class="swing-text">
+                Çocuklarımız için özel hazırlanmış eğitim içerikleri
+            </div>
+        </div>
+        <div class="d-flex justify-content-center gap-4 animate__animated animate__fadeIn animate__delay-1s">
+            <a asp-area="" asp-controller="Course" asp-action="Index" class="btn btn-primary pulse">
+                <i class="fas fa-rocket me-2"></i>
+                Eğitimleri Keşfet
+            </a>
+            <a asp-area="" asp-controller="Home" asp-action="Info" class="btn btn-secondary bounce-hover">
+                <i class="fas fa-magic me-2"></i>
+                Daha Fazla Bilgi
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <div class="feature-icon-wrapper">
+                    <div class="feature-icon-bg">
+                        <i class="fas fa-gamepad feature-icon"></i>
+                    </div>
+                </div>
+                <h3 class="mt-4">Eğlenceli Oyunlar</h3>
+                <p>Renkli ve eğlenceli oyunlarla öğrenmeyi seviyoruz! 🎮</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <div class="feature-icon-wrapper">
+                    <div class="feature-icon-bg">
+                        <i class="fas fa-palette feature-icon"></i>
+                    </div>
+                </div>
+                <h3 class="mt-4">Renkli Aktiviteler</h3>
+                <p>Her gün yeni ve heyecan verici aktiviteler keşfediyoruz! 🌈</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <div class="feature-icon-wrapper">
+                    <div class="feature-icon-bg">
+                        <i class="fas fa-trophy feature-icon"></i>
+                    </div>
+                </div>
+                <h3 class="mt-4">Başarı Rozetleri</h3>
+                <p>Her başarını özel rozetlerle ödüllendiriyoruz! 🏆</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <h2 class="mb-4">Neler Öğreniyoruz?</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="feature-card">
+                <div class="d-flex align-items-center">
+                    <div class="feature-icon-wrapper me-3">
+                        <i class="fas fa-shapes text-primary"></i>
+                    </div>
+                    <div>
+                        <h4>Renkler ve Şekiller</h4>
+                        <p>Dünyamızı rengarenk şekillerle keşfediyoruz! 🎨</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="feature-card">
+                <div class="d-flex align-items-center">
+                    <div class="feature-icon-wrapper me-3">
+                        <i class="fas fa-music text-warning"></i>
+                    </div>
+                    <div>
+                        <h4>Müzik ve Hareket</h4>
+                        <p>Müzikle dans ediyor, eğleniyoruz! 🎵</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2 class="mb-4">Maceraya Katıl!</h2>
+            <p class="mb-4">Eğlenceli öğrenme yolculuğuna sen de katıl!</p>
+            <a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg shake-hover">
+                <i class="fas fa-star me-2"></i>
+                Hemen Başla
+            </a>
+        </div>
+    </div>
+</div>

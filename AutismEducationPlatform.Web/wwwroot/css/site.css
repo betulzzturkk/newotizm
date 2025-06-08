@@ -1,0 +1,523 @@
+html {
+  font-size: 14px;
+  position: relative;
+  min-height: 100%;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+body {
+  margin-bottom: 250px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.container {
+  flex: 1;
+}
+
+/* Animasyonlu arka plan şekilleri */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 90% 30%, rgba(173, 216, 230, 0.15) 0%, transparent 20%),
+    radial-gradient(circle at 30% 70%, rgba(255, 218, 185, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 80% 80%, rgba(176, 224, 230, 0.15) 0%, transparent 20%);
+  animation: backgroundMove 20s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundMove {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* Renkli ve çocuk dostu tasarım */
+:root {
+  --primary-color: #00BCD4;
+  --secondary-color: #4CAF50;
+  --accent-color: #FFC107;
+  --success-color: #8BC34A;
+  --info-color: #03A9F4;
+  --warning-color: #FFB300;
+  --danger-color: #FF5252;
+}
+
+.navbar {
+  background: linear-gradient(135deg, #03A9F4 0%, #00BCD4 100%) !important;
+  padding: 1rem 0;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+  color: white !important;
+  font-weight: 500;
+}
+
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #03A9F4 0%, #00BCD4 100%);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(3, 169, 244, 0.4);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #9C27B0 0%, #673AB7 100%);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  padding: 2.5rem;
+  margin: 1rem 0;
+  transition: all 0.4s ease;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.feature-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-icon-wrapper::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);
+    animation: shine 2s infinite;
+}
+
+.feature-icon-wrapper i {
+    font-size: 2.5rem;
+    color: white;
+}
+
+@keyframes shine {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 0.5; }
+}
+
+.footer {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem 0;
+  color: #333;
+  width: 100%;
+  margin-top: auto;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.footer h5 {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer ul li a {
+  color: #555;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer ul li a:hover {
+  color: #03A9F4;
+  padding-left: 5px;
+}
+
+.footer p {
+  color: #555;
+  margin: 0;
+}
+
+.footer .copyright {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Animasyonlar */
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.bounce-hover:hover {
+  animation: bounce 0.5s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.shake-hover:hover {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* Animate.css için gerekli stil */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+.hero-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, rgba(3, 169, 244, 0.1) 0%, rgba(0, 188, 212, 0.1) 100%);
+    border-radius: 20px;
+    margin: 2rem 0;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    animation: swing 4s ease-in-out infinite;
+}
+
+.hero-title .swing-text {
+    background: linear-gradient(45deg, 
+        #FF6B6B,  /* Canlı kırmızı */
+        #4ECDC4,  /* Turkuaz */
+        #45B7D1,  /* Mavi */
+        #96CEB4,  /* Soft yeşil */
+        #FF6B6B   /* Döngü için tekrar kırmızı */
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-move 8s linear infinite;
+    background-size: 500% auto;
+}
+
+.hero-subtitle {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    animation: swing 4s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+.hero-subtitle .swing-text {
+    background: linear-gradient(45deg,
+        #4ECDC4,  /* Turkuaz */
+        #45B7D1,  /* Mavi */
+        #96CEB4,  /* Soft yeşil */
+        #4ECDC4   /* Döngü için tekrar turkuaz */
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-move 6s linear infinite;
+    background-size: 300% auto;
+}
+
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes swing {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(3deg);
+    }
+    75% {
+        transform: rotate(-3deg);
+    }
+}
+
+.text-gradient {
+    display: inline-block;
+}
+
+/* Hover efekti ekleyelim */
+.hero-title:hover .swing-text,
+.hero-subtitle:hover .swing-text {
+    animation: rainbow-flash 1s linear;
+}
+
+@keyframes rainbow-flash {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.feature-icon-wrapper {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-icon-bg {
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    animation: float 3s ease-in-out infinite;
+}
+
+.feature-icon-bg::before {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.7;
+    animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #03A9F4, #00BCD4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    z-index: 2;
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0.7;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* İletişim Sayfası Stilleri */
+.contact-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+}
+
+.developer-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 5px solid white;
+    transition: transform 0.3s ease;
+}
+
+.developer-image:hover {
+    transform: scale(1.05);
+}
+
+.developer-name {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 1rem 0;
+    background: linear-gradient(135deg, #03A9F4, #00BCD4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-item {
+    padding: 0.8rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin: 0.5rem;
+}
+
+.contact-item:hover {
+    background: rgba(3, 169, 244, 0.1);
+    transform: translateX(5px);
+}
+
+.contact-item i {
+    font-size: 1.5rem;
+    width: 30px;
+    vertical-align: middle;
+}
+
+.contact-item a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.contact-item:hover a {
+    color: #03A9F4;
+}
+
+.contact-links {
+    margin: 2rem 0;
+}
+
+main {
+    flex: 1 0 auto;
+}
