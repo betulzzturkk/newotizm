@@ -1,0 +1,80 @@
+@using AutismEducationPlatform.Web.Models.ViewModels
+@model List<CourseCardViewModel>
+
+@{
+    ViewData["Title"] = "Eğitimler";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-5">
+        <i class="fas fa-graduation-cap me-2"></i>
+        Eğitimlerimiz
+    </h1>
+
+    <div class="row g-4">
+        @foreach (var course in Model)
+        {
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 course-card @course.BackgroundColor text-white">
+                    <div class="card-body text-center">
+                        <div class="course-icon mb-3">
+                            <i class="@course.IconClass fa-3x"></i>
+                        </div>
+                        <h5 class="card-title">@course.Title</h5>
+                        <p class="card-text">@course.Description</p>
+                        <a asp-action="Details" asp-route-title="@course.Title" class="btn btn-light mt-3">
+                            <i class="fas fa-arrow-right me-2"></i>
+                            Başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .course-card {
+        transition: transform 0.3s ease;
+        border: none;
+        border-radius: 15px;
+    }
+
+    .course-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .course-icon {
+        background: rgba(255, 255, 255, 0.2);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+
+    .btn-light {
+        border-radius: 25px;
+        padding: 8px 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-light:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+</style> 

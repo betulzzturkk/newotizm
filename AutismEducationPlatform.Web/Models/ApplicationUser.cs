@@ -1,14 +1,54 @@
 using Microsoft.AspNetCore.Identity;
-using AutismEducationPlatform.Web.Models.ViewModels;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutismEducationPlatform.Web.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public string Role { get; set; } = string.Empty;
+        [StringLength(100)]
         public string? FirstName { get; set; }
+
+        [StringLength(100)]
         public string? LastName { get; set; }
-        public string? AdditionalInfo { get; set; } // JSON formatında ek bilgiler için
-        public string Name { get; set; } = string.Empty;
+
+        [StringLength(50)]
+        public string? Role { get; set; }
+
+        [Required]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public DateTime? LastLoginAt { get; set; }
+
+        [Required]
+        public bool IsActive { get; set; } = true;
+
+        // Child Information
+        [StringLength(100)]
+        [PersonalData]
+        public string? ChildName { get; set; }
+
+        [Range(1, 18)]
+        [PersonalData]
+        public int? ChildAge { get; set; }
+
+        [StringLength(200)]
+        [PersonalData]
+        public string? ChildDiagnosis { get; set; }
+
+        // Contact Information
+        [StringLength(500)]
+        [PersonalData]
+        public string? Address { get; set; }
+
+        [NotMapped]
+        public string FullName => $"{FirstName} {LastName}".Trim();
+
+        public virtual ICollection<IdentityUserToken<string>> UserTokens { get; set; }
+
+        public ApplicationUser()
+        {
+            UserTokens = new HashSet<IdentityUserToken<string>>();
+        }
     }
 } 

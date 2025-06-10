@@ -22,12 +22,16 @@ namespace AutismEducationPlatform.Web.Models
         public string? InstructorId { get; set; }
 
         [ForeignKey("InstructorId")]
-        public IdentityUser? Instructor { get; set; }
+        public ApplicationUser? Instructor { get; set; }
 
         public bool IsActive { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
+
+        public string Title { get; set; } = string.Empty;
+        public string IconClass { get; set; } = string.Empty;
+        public string BackgroundColor { get; set; } = string.Empty;
     }
 } 

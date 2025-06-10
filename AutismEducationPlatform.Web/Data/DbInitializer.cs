@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using AutismEducationPlatform.Web.Models;
 
 namespace AutismEducationPlatform.Web.Data
 {
@@ -7,7 +8,7 @@ namespace AutismEducationPlatform.Web.Data
     {
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
-            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             // Rolleri oluştur
@@ -24,11 +25,13 @@ namespace AutismEducationPlatform.Web.Data
             var adminUser = await userManager.FindByEmailAsync("admin@example.com");
             if (adminUser == null)
             {
-                adminUser = new IdentityUser
+                adminUser = new ApplicationUser
                 {
                     UserName = "admin@example.com",
                     Email = "admin@example.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    FirstName = "Admin",
+                    LastName = "User"
                 };
 
                 var result = await userManager.CreateAsync(adminUser, "Admin123!");
@@ -41,11 +44,13 @@ namespace AutismEducationPlatform.Web.Data
             var parentUser = await userManager.FindByEmailAsync("parent@example.com");
             if (parentUser == null)
             {
-                parentUser = new IdentityUser
+                parentUser = new ApplicationUser
                 {
                     UserName = "parent@example.com",
                     Email = "parent@example.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    FirstName = "Parent",
+                    LastName = "User"
                 };
 
                 var result = await userManager.CreateAsync(parentUser, "Parent123!");

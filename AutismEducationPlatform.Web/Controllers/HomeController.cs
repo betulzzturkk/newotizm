@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using AutismEducationPlatform.Web.Models;
 
 namespace AutismEducationPlatform.Web.Controllers;
@@ -8,33 +8,14 @@ namespace AutismEducationPlatform.Web.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly UserManager<IdentityUser> _userManager;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager)
+    public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
-        _userManager = userManager;
     }
 
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        if (User.Identity?.IsAuthenticated == true)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user != null)
-            {
-                var roles = await _userManager.GetRolesAsync(user);
-                if (roles.Contains("Parent"))
-                {
-                    return RedirectToAction("Index", "Parent");
-                }
-                else if (roles.Contains("Instructor"))
-                {
-                    return RedirectToAction("Index", "Instructor");
-                }
-            }
-        }
-
         return View();
     }
 

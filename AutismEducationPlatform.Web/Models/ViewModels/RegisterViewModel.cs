@@ -4,6 +4,14 @@ namespace AutismEducationPlatform.Web.Models.ViewModels
 {
     public class RegisterViewModel
     {
+        [Required(ErrorMessage = "Ad alanı zorunludur.")]
+        [Display(Name = "Ad")]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Soyad alanı zorunludur.")]
+        [Display(Name = "Soyad")]
+        public string LastName { get; set; } = string.Empty;
+
         [Required(ErrorMessage = "E-posta adresi gereklidir.")]
         [EmailAddress(ErrorMessage = "Geçerli bir e-posta adresi giriniz.")]
         [Display(Name = "E-posta")]

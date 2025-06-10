@@ -1,156 +1,84 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using AutismEducationPlatform.Web.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Otizm Eğitim Platformu</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/AutismEducationPlatform.Web.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-puzzle-piece me-2"></i>
+                    <i class="fas fa-puzzle-piece text-primary me-2"></i>
                     Otizm Eğitim Platformu
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Parent"))
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i>Ana Sayfa
+                            </a>
+                        </li>
+                        @if (User?.Identity?.IsAuthenticated == true)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Parent" asp-action="Courses">
-                                    <i class="fas fa-book me-1"></i> Eğitimleri Görüntüle
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Parent" asp-action="ChildInfo">
-                                    <i class="fas fa-user me-1"></i> Çocuk Bilgileri
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Parent" asp-action="Progress">
-                                    <i class="fas fa-chart-line me-1"></i> İlerleme Raporu
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Parent" asp-action="Feedback">
-                                    <i class="fas fa-comments me-1"></i> Geri Bildirim
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Parent" asp-action="Information">
-                                    <i class="fas fa-info-circle"></i> Bilgilendirme
-                                </a>
-                            </li>
+                            @if (User.IsInRole("Parent"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Parent" asp-action="Index">
+                                        <i class="fas fa-user me-1"></i>Veli Paneli
+                                    </a>
+                                </li>
+                            }
+                            else if (User.IsInRole("Instructor"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Instructor" asp-action="Index">
+                                        <i class="fas fa-chalkboard-teacher me-1"></i>Eğitmen Paneli
+                                    </a>
+                                </li>
+                            }
                         }
-                        else if (User.Identity?.IsAuthenticated == true && User.IsInRole("Instructor"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Instructor" asp-action="Students">
-                                    <i class="fas fa-user-graduate me-1"></i> Öğrenciler
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Instructor" asp-action="Courses">
-                                    <i class="fas fa-book me-1"></i> Kurslar
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Instructor" asp-action="Activities">
-                                    <i class="fas fa-tasks me-1"></i> Aktiviteler
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Instructor" asp-action="Progress">
-                                    <i class="fas fa-chart-line me-1"></i> İlerleme Takibi
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Instructor" asp-action="Feedback">
-                                    <i class="fas fa-comments me-1"></i> Geri Bildirimler
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Instructor" asp-action="Reports">
-                                    <i class="fas fa-file-alt me-1"></i> Raporlar
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">Hakkında</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="FAQ">SSS</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">İletişim</a>
-                            </li>
-                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">
+                                <i class="fas fa-shield-alt me-1"></i>Gizlilik
+                            </a>
+                        </li>
                     </ul>
-                    <ul class="navbar-nav">
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Profile">Profil</a>
-                            </li>
-                            <li class="nav-item">
-                                <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout" method="post">
-                                    <button type="submit" class="nav-link btn btn-link">Çıkış Yap</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">
-                                    <i class="fas fa-sign-in-alt me-1"></i> Giriş Yap
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">
-                                    <i class="fas fa-user-plus me-1"></i> Kayıt Ol
-                                </a>
-                            </li>
-                        }
-                    </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
 
-    <main role="main">
-        @RenderBody()
-    </main>
+    <div class="container-fluid px-0">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
 
-    <footer class="footer">
+    <footer class="footer text-muted">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Otizm Eğitim Platformu</h5>
-                    <p class="small">Çocuklarımızın geleceği için özel eğitim desteği</p>
+            <div class="row py-4">
+                <div class="col-md-6">
+                    &copy; @DateTime.Now.Year - Otizm Eğitim Platformu
                 </div>
-                <div class="col-md-4">
-                    <h5>Hızlı Bağlantılar</h5>
-                    <ul class="list-unstyled">
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">Hakkında</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="FAQ">SSS</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">İletişim</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 text-end">
-                    <p class="copyright">&copy; 2025 - İGÜ - Otizm Eğitim Platformu</p>
+                <div class="col-md-6 text-end">
+                    <a asp-controller="Home" asp-action="Privacy">Gizlilik Politikası</a>
                 </div>
             </div>
         </div>

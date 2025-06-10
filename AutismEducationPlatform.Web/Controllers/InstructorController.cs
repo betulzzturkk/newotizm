@@ -12,9 +12,9 @@ namespace AutismEducationPlatform.Web.Controllers
     [Authorize(Roles = "Instructor")]
     public class InstructorController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public InstructorController(UserManager<IdentityUser> userManager)
+        public InstructorController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }

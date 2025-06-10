@@ -2,111 +2,195 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="hero-section text-center">
-    <div class="container">
-        <div class="hero-title animate__animated animate__fadeInDown">
-            <div class="swing-text">
-                Otizm Eğitim Platformuna<br>
-                Hoş Geldiniz
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" />
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 80px 0;
+            margin-top: -1rem;
+        }
+
+        .features-section .card {
+            transition: transform 0.3s ease;
+        }
+
+        .features-section .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+        }
+    </style>
+}
+
+<div class="container-fluid p-0">
+    <!-- Hero Section -->
+    <div class="hero-section text-center py-5">
+        <div class="container">
+            <h1 class="display-4 mb-4">Otizm Eğitim Platformuna Hoş Geldiniz</h1>
+            <p class="lead mb-4">Çocuğunuzun gelişimi için özel olarak tasarlanmış eğitim platformu</p>
+            <div class="mt-4">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg me-3">
+                    <i class="fas fa-user-plus me-2"></i>Hemen Başlayın
+                </a>
+                <a asp-controller="Home" asp-action="About" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-info-circle me-2"></i>Daha Fazla Bilgi
+                </a>
             </div>
         </div>
-        <div class="hero-subtitle animate__animated animate__fadeInUp">
-            <div class="swing-text">
-                Çocuklarımız için özel hazırlanmış eğitim içerikleri
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Platformumuzun Özellikleri</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
+                            <h3 class="card-title h5">Özelleştirilmiş Eğitim</h3>
+                            <p class="card-text">Her çocuğun ihtiyaçlarına göre özel olarak hazırlanmış eğitim programları</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                            <h3 class="card-title h5">Gelişim Takibi</h3>
+                            <p class="card-text">Detaylı raporlar ve analizlerle çocuğunuzun gelişimini adım adım takip edin</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                            <h3 class="card-title h5">Uzman Desteği</h3>
+                            <p class="card-text">Alanında uzman eğitmenlerle sürekli iletişim ve destek imkanı</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center gap-4 animate__animated animate__fadeIn animate__delay-1s">
-            <a asp-area="" asp-controller="Course" asp-action="Index" class="btn btn-primary pulse">
-                <i class="fas fa-rocket me-2"></i>
-                Eğitimleri Keşfet
-            </a>
-            <a asp-area="" asp-controller="Home" asp-action="Info" class="btn btn-secondary bounce-hover">
-                <i class="fas fa-magic me-2"></i>
-                Daha Fazla Bilgi
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="how-it-works-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Nasıl Çalışır?</h2>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="step text-center">
+                        <div class="step-number">1</div>
+                        <h4>Kayıt Olun</h4>
+                        <p>Hızlı ve kolay kayıt işlemi ile platformumuza üye olun</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step text-center">
+                        <div class="step-number">2</div>
+                        <h4>Profil Oluşturun</h4>
+                        <p>Çocuğunuzun ihtiyaçlarına göre profil bilgilerini doldurun</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step text-center">
+                        <div class="step-number">3</div>
+                        <h4>Program Seçin</h4>
+                        <p>Size özel hazırlanmış eğitim programlarından uygun olanı seçin</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step text-center">
+                        <div class="step-number">4</div>
+                        <h4>Eğitime Başlayın</h4>
+                        <p>Hemen eğitimlere başlayın ve gelişimi takip edin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="cta-section py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="mb-4">Hemen Ücretsiz Deneyin</h2>
+            <p class="lead mb-4">Çocuğunuzun gelişimine katkıda bulunmak için ilk adımı atın</p>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-light btn-lg">
+                <i class="fas fa-rocket me-2"></i>Şimdi Başlayın
             </a>
         </div>
     </div>
 </div>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="feature-card text-center">
-                <div class="feature-icon-wrapper">
-                    <div class="feature-icon-bg">
-                        <i class="fas fa-gamepad feature-icon"></i>
-                    </div>
-                </div>
-                <h3 class="mt-4">Eğlenceli Oyunlar</h3>
-                <p>Renkli ve eğlenceli oyunlarla öğrenmeyi seviyoruz! 🎮</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-card text-center">
-                <div class="feature-icon-wrapper">
-                    <div class="feature-icon-bg">
-                        <i class="fas fa-palette feature-icon"></i>
-                    </div>
-                </div>
-                <h3 class="mt-4">Renkli Aktiviteler</h3>
-                <p>Her gün yeni ve heyecan verici aktiviteler keşfediyoruz! 🌈</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-card text-center">
-                <div class="feature-icon-wrapper">
-                    <div class="feature-icon-bg">
-                        <i class="fas fa-trophy feature-icon"></i>
-                    </div>
-                </div>
-                <h3 class="mt-4">Başarı Rozetleri</h3>
-                <p>Her başarını özel rozetlerle ödüllendiriyoruz! 🏆</p>
-            </div>
-        </div>
-    </div>
+@section Scripts {
+    <script>
+        // GSAP Animasyonları
+        gsap.registerPlugin(ScrollTrigger);
 
-    <div class="row mt-5">
-        <div class="col-12 text-center">
-            <h2 class="mb-4">Neler Öğreniyoruz?</h2>
-        </div>
-        <div class="col-md-6">
-            <div class="feature-card">
-                <div class="d-flex align-items-center">
-                    <div class="feature-icon-wrapper me-3">
-                        <i class="fas fa-shapes text-primary"></i>
-                    </div>
-                    <div>
-                        <h4>Renkler ve Şekiller</h4>
-                        <p>Dünyamızı rengarenk şekillerle keşfediyoruz! 🎨</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="feature-card">
-                <div class="d-flex align-items-center">
-                    <div class="feature-icon-wrapper me-3">
-                        <i class="fas fa-music text-warning"></i>
-                    </div>
-                    <div>
-                        <h4>Müzik ve Hareket</h4>
-                        <p>Müzikle dans ediyor, eğleniyoruz! 🎵</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        gsap.from('.floating-shape', {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
 
-<div class="container mt-5 mb-5">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h2 class="mb-4">Maceraya Katıl!</h2>
-            <p class="mb-4">Eğlenceli öğrenme yolculuğuna sen de katıl!</p>
-            <a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg shake-hover">
-                <i class="fas fa-star me-2"></i>
-                Hemen Başla
-            </a>
-        </div>
-    </div>
-</div>
+        gsap.to('.floating-shape', {
+            y: -20,
+            duration: 2,
+            yoyo: true,
+            repeat: -1,
+            ease: "power1.inOut",
+            stagger: {
+                amount: 1
+            }
+        });
+
+        // Feature kartları için scroll animasyonu
+        gsap.from('.feature-card', {
+            scrollTrigger: {
+                trigger: '.features-section',
+                start: 'top center+=100',
+                toggleActions: 'play none none reverse'
+            },
+            y: 100,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: 'power3.out'
+        });
+
+        // Content kartları için scroll animasyonu
+        gsap.from('.content-card', {
+            scrollTrigger: {
+                trigger: '.content-section',
+                start: 'top center+=100',
+                toggleActions: 'play none none reverse'
+            },
+            y: 100,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: 'power3.out'
+        });
+    </script>
+}

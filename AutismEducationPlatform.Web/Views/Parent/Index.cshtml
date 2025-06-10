@@ -1,91 +1,494 @@
-@model AutismEducationPlatform.Web.Models.ViewModels.ParentDashboardViewModel
+@using AutismEducationPlatform.Web.Models.ViewModels
+@model ParentDashboardViewModel
 
 @{
     ViewData["Title"] = "Veli Paneli";
 }
 
-<div class="container mt-4">
-    <h1 class="mb-4">@ViewData["Title"]</h1>
+<div class="container-fluid py-4">
+    <!-- Üst Profil Alanı -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Hoş Geldiniz, @Model.UserProfile.Name</h1>
+        <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="@Model.UserProfile.ProfilePicture" alt="Profil" class="rounded-circle" width="32" height="32">
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                <li><a class="dropdown-item" href="@Url.Action("Profile", "Parent")">Profili Görüntüle</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="@Url.Action("Logout", "Account")">Çıkış Yap</a></li>
+            </ul>
+        </div>
+    </div>
 
     <div class="row">
         <!-- Çocuk Bilgileri -->
         <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-header">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title mb-0">Çocuk Bilgileri</h5>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#childInfoModal">
+                        Düzenle
+                    </button>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">
-                        <strong>Ad Soyad:</strong> @(Model?.ChildInfo?.Name ?? "Belirtilmemiş")<br />
-                        <strong>Yaş:</strong> @Model?.ChildInfo?.Age<br />
-                        <strong>Tanı:</strong> @(Model?.ChildInfo?.Diagnosis ?? "Belirtilmemiş")
-                    </p>
+                    <p><strong>İsim:</strong> @Model.ChildInfo.Name</p>
+                    <p><strong>Yaş:</strong> @Model.ChildInfo.Age</p>
+                    <p><strong>Tanı:</strong> @Model.ChildInfo.Diagnosis</p>
+                    <p><strong>İlgi Alanları:</strong> @Model.ChildInfo.Interests</p>
+                    <p><strong>Özel İhtiyaçlar:</strong> @Model.ChildInfo.SpecialNeeds</p>
                 </div>
             </div>
         </div>
 
-        <!-- Kurslar -->
+        <!-- Gelişim Grafiği -->
         <div class="col-md-8 mb-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Kayıtlı Kurslar</h5>
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Çocuğumun Gelişimi</h5>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailedReportModal">
+                        <i class="fas fa-chart-line"></i> Detaylı Rapor
+                    </button>
                 </div>
                 <div class="card-body">
-                    @if (Model?.Courses != null && Model.Courses.Any())
+                    <!-- Genel İstatistikler -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 text-center">
+                            <div class="border rounded p-3">
+                                <h6 class="text-muted">Tamamlanan Dersler</h6>
+                                <h3>@Model.ProgressReport.Statistics.TotalLessonsCompleted/@Model.ProgressReport.Statistics.TotalLessonsAvailable</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="border rounded p-3">
+                                <h6 class="text-muted">Başarı Oranı</h6>
+                                <h3>%@Model.ProgressReport.Statistics.AverageSuccessRate</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="border rounded p-3">
+                                <h6 class="text-muted">Toplam Süre</h6>
+                                <h3>@Model.ProgressReport.Statistics.TotalStudyTimeHours sa</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="border rounded p-3">
+                                <h6 class="text-muted">Seviye</h6>
+                                <h3>@Model.ProgressReport.Statistics.CurrentLevel</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kategori İlerlemeleri -->
+                    <h6 class="mb-3">Kategori Bazında İlerleme</h6>
+                    @foreach (var category in Model.ProgressReport.CategoryProgress)
                     {
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span>@category.CategoryName</span>
+                                <span class="text-muted">@category.CompletedLessons/@category.TotalLessons Ders</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" 
+                                     style="width: @(category.SuccessRate)%; background-color: @category.Color"
+                                     aria-valuenow="@category.SuccessRate" aria-valuemin="0" aria-valuemax="100">
+                                    %@category.SuccessRate
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Son Aktiviteler -->
+                    <h6 class="mb-3 mt-4">Son Aktiviteler</h6>
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                        <table class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th>Kurs Adı</th>
+                                    <th>Aktivite</th>
+                                    <th>Kategori</th>
+                                    <th>Puan</th>
                                         <th>Durum</th>
-                                        <th>İşlemler</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var course in Model.Courses)
+                                @foreach (var activity in Model.ProgressReport.RecentActivities)
                                     {
                                         <tr>
-                                            <td>@course.Title</td>
-                                            <td>@course.Status</td>
+                                        <td>@activity.ActivityName</td>
+                                        <td>@activity.Category</td>
+                                        <td>@activity.Score</td>
                                             <td>
-                                                <a asp-action="CourseDetails" asp-route-id="@course.Id" class="btn btn-sm btn-primary">Detaylar</a>
+                                            <span class="badge @(activity.Status == "Tamamlandı" ? "bg-success" : "bg-warning")">
+                                                @activity.Status
+                                            </span>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
                         </div>
-                    }
-                    else
-                    {
-                        <p class="text-muted">Henüz kayıtlı kurs bulunmamaktadır.</p>
-                    }
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- İlerleme Raporu -->
+    <div class="row">
+        <!-- Eğitimler -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Eğitimler</h5>
+                </div>
+                <div class="card-body">
+                    @foreach (var course in Model.Courses)
+                    {
+                        <div class="mb-3">
+                            <h6>@course.Title</h6>
+                            <p class="text-muted small">@course.Description</p>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: @(course.Progress)%"
+                                     aria-valuenow="@course.Progress" aria-valuemin="0" aria-valuemax="100">
+                                    %@course.Progress
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="text-end mt-3">
+                        <a href="@Url.Action("Index", "Course")" class="btn btn-primary">
+                            <i class="fas fa-graduation-cap"></i> Tüm Eğitimleri Görüntüle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Duyurular ve Mesajlar -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Duyurular ve Mesajlar</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="communicationTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#announcements">
+                                Duyurular
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#messages">
+                                Mesajlar
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                        <div class="tab-pane fade show active" id="announcements">
+                            @foreach (var announcement in Model.Announcements)
+                            {
+                                <div class="alert alert-info">
+                                    <h6>@announcement.Title</h6>
+                                    <p>@announcement.Content</p>
+                                    <small class="text-muted">@announcement.Date.ToString("dd.MM.yyyy")</small>
+                                </div>
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="messages">
+                            @foreach (var message in Model.Messages)
+                            {
+                                <div class="alert alert-light">
+                                    <h6>@message.Title</h6>
+                                    <p>@message.Content</p>
+                                    <small class="text-muted">
+                                        @message.SenderName - @message.Date.ToString("dd.MM.yyyy")
+                                    </small>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Geri Bildirim Formu -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Geri Bildirim</h5>
+                </div>
+                <div class="card-body">
+                    <form id="feedbackForm">
+                        <div class="mb-3">
+                            <label for="feedbackType" class="form-label">Geri Bildirim Türü</label>
+                            <select class="form-select" id="feedbackType" required>
+                                <option value="">Seçiniz</option>
+                                <option value="suggestion">Öneri</option>
+                                <option value="problem">Problem Bildirimi</option>
+                                <option value="appreciation">Teşekkür</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="feedbackMessage" class="form-label">Mesajınız</label>
+                            <textarea class="form-control" id="feedbackMessage" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- SSS -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Sık Sorulan Sorular</h5>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="faqAccordion">
+                        @for (var i = 0; i < Model.FAQs.Count; i++)
+                        {
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button @(i > 0 ? "collapsed" : "")" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#faq@(i)">
+                                        @Model.FAQs[i].Question
+                                    </button>
+                                </h2>
+                                <div id="faq@(i)" class="accordion-collapse collapse @(i == 0 ? "show" : "")"
+                                     data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        @Model.FAQs[i].Answer
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- İletişim Bilgileri -->
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">İlerleme Raporu</h5>
+                    <h5 class="card-title mb-0">İletişim</h5>
                 </div>
                 <div class="card-body">
-                    @if (Model?.ProgressReport != null)
-                    {
-                        <h6>@Model.ProgressReport.Title</h6>
-                        <p>@Model.ProgressReport.Content</p>
-                        <small class="text-muted">Rapor Tarihi: @Model.ProgressReport.Date.ToString("dd/MM/yyyy")</small>
-                    }
-                    else
-                    {
-                        <p class="text-muted">Henüz ilerleme raporu bulunmamaktadır.</p>
-                    }
+                            <div class="row">
+                        <div class="col-md-3">
+                            <p><i class="fas fa-envelope me-2"></i> @Model.ContactInfo.Email</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><i class="fas fa-phone me-2"></i> @Model.ContactInfo.Phone</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><i class="fas fa-map-marker-alt me-2"></i> @Model.ContactInfo.Address</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><i class="fas fa-clock me-2"></i> @Model.ContactInfo.SupportHours</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Çocuk Bilgileri Düzenleme Modal -->
+<div class="modal fade" id="childInfoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Çocuk Bilgilerini Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="childInfoForm" method="post" action="@Url.Action("UpdateChildInfo", "Parent")">
+                    <div class="mb-3">
+                        <label for="childName" class="form-label">İsim</label>
+                        <input type="text" class="form-control" id="childName" name="Name" 
+                               value="@Model.ChildInfo.Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="childAge" class="form-label">Yaş</label>
+                        <input type="number" class="form-control" id="childAge" name="Age" 
+                               value="@Model.ChildInfo.Age" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="childDiagnosis" class="form-label">Tanı</label>
+                        <input type="text" class="form-control" id="childDiagnosis" name="Diagnosis" 
+                               value="@Model.ChildInfo.Diagnosis" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="childInterests" class="form-label">İlgi Alanları</label>
+                        <input type="text" class="form-control" id="childInterests" name="Interests" 
+                               value="@Model.ChildInfo.Interests">
+                    </div>
+                    <div class="mb-3">
+                        <label for="childSpecialNeeds" class="form-label">Özel İhtiyaçlar</label>
+                        <textarea class="form-control" id="childSpecialNeeds" name="SpecialNeeds" 
+                                  rows="3">@Model.ChildInfo.SpecialNeeds</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </form>
+                                    </div>
+                                </div>
+                                    </div>
+                                </div>
+
+<!-- Detaylı Rapor Modal -->
+<div class="modal fade" id="detailedReportModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detaylı İlerleme Raporu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Haftalık İlerleme Grafiği -->
+                <h6 class="mb-3">Haftalık İlerleme</h6>
+                <canvas id="weeklyProgressChart" height="100"></canvas>
+
+                <!-- İstatistikler -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Genel İstatistikler</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-trophy text-warning"></i>
+                                        Toplam Puan: @Model.ProgressReport.Statistics.TotalPoints
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-calendar-check text-success"></i>
+                                        Kesintisiz Çalışma: @Model.ProgressReport.Statistics.ConsecutiveDays gün
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-clock text-info"></i>
+                                        Son Aktivite: @Model.ProgressReport.Statistics.LastActivityDate.ToString("dd.MM.yyyy HH:mm")
+                                    </li>
+                                </ul>
+                            </div>
+                                    </div>
+                                </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Öneriler</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-lightbulb text-warning"></i>
+                                        Renk kategorisinde çok başarılısınız!
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-info-circle text-info"></i>
+                                        Duygular kategorisinde daha fazla çalışma yapabilirsiniz.
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-star text-success"></i>
+                                        Günlük çalışma rutininiz çok iyi!
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div> 
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Gelişim grafiği
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        const progressData = @Html.Raw(Json.Serialize(Model.ProgressData));
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: progressData.map(d => new Date(d.date).toLocaleDateString('tr-TR')),
+                datasets: [{
+                    label: 'Gelişim',
+                    data: progressData.map(d => d.value),
+                    borderColor: progressData.map(d => d.color),
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Geri bildirim formu
+        document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const type = document.getElementById('feedbackType').value;
+            const message = document.getElementById('feedbackMessage').value;
+
+            try {
+                const response = await fetch('@Url.Action("SendFeedback", "Parent")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: `${type}: ${message}` })
+                });
+
+                if (response.ok) {
+                    alert('Geri bildiriminiz için teşekkür ederiz!');
+                    document.getElementById('feedbackForm').reset();
+                } else {
+                    alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.');
+            }
+        });
+
+        // Haftalık ilerleme grafiği
+        const weeklyCtx = document.getElementById('weeklyProgressChart').getContext('2d');
+        const weeklyData = @Html.Raw(Json.Serialize(Model.ProgressReport.WeeklyProgress));
+        
+        new Chart(weeklyCtx, {
+            type: 'line',
+            data: {
+                labels: weeklyData.map(w => new Date(w.weekStartDate).toLocaleDateString('tr-TR')),
+                datasets: [
+                    {
+                        label: 'Başarı Oranı (%)',
+                        data: weeklyData.map(w => w.successRate),
+                        borderColor: '#4CAF50',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Tamamlanan Ders',
+                        data: weeklyData.map(w => w.completedLessons),
+                        borderColor: '#2196F3',
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+} 
