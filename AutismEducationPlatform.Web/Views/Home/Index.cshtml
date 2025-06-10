@@ -2,144 +2,85 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/home.css" />
-    <style>
-        .hero-section {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 80px 0;
-            margin-top: -1rem;
-        }
+<div class="hero-section text-center py-5 animate__animated animate__fadeIn">
+    <h1 class="display-4 mb-4">Otizm Eğitim Platformuna Hoş Geldiniz</h1>
+    <p class="lead mb-4">Çocuğunuzun gelişimi için özel olarak hazırlanmış eğitim içerikleri</p>
+    <a href="/Course" class="btn btn-primary btn-lg px-4">Eğitimleri Keşfet</a>
+</div>
 
-        .features-section .card {
-            transition: transform 0.3s ease;
-        }
-
-        .features-section .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background-color: #0d6efd;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin: 0 auto 1rem;
-        }
-
-        .cta-section {
-            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
-        }
-    </style>
-}
-
-<div class="container-fluid p-0">
-    <!-- Hero Section -->
-    <div class="hero-section text-center py-5">
-        <div class="container">
-            <h1 class="display-4 mb-4">Otizm Eğitim Platformuna Hoş Geldiniz</h1>
-            <p class="lead mb-4">Çocuğunuzun gelişimi için özel olarak tasarlanmış eğitim platformu</p>
-            <div class="mt-4">
-                <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg me-3">
-                    <i class="fas fa-user-plus me-2"></i>Hemen Başlayın
-                </a>
-                <a asp-controller="Home" asp-action="About" class="btn btn-outline-primary btn-lg">
-                    <i class="fas fa-info-circle me-2"></i>Daha Fazla Bilgi
-                </a>
+<div class="features-section py-5">
+    <div class="row g-4">
+        <div class="col-md-4 animate__animated animate__fadeInLeft">
+            <div class="feature-card text-center p-4">
+                <i class="fas fa-book-reader feature-icon mb-3"></i>
+                <h3>Özel Eğitim İçerikleri</h3>
+                <p>Her çocuğun ihtiyacına uygun özelleştirilmiş eğitim materyalleri</p>
             </div>
         </div>
-    </div>
-
-    <!-- Features Section -->
-    <div class="features-section py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Platformumuzun Özellikleri</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
-                            <h3 class="card-title h5">Özelleştirilmiş Eğitim</h3>
-                            <p class="card-text">Her çocuğun ihtiyaçlarına göre özel olarak hazırlanmış eğitim programları</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
-                            <h3 class="card-title h5">Gelişim Takibi</h3>
-                            <p class="card-text">Detaylı raporlar ve analizlerle çocuğunuzun gelişimini adım adım takip edin</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                            <h3 class="card-title h5">Uzman Desteği</h3>
-                            <p class="card-text">Alanında uzman eğitmenlerle sürekli iletişim ve destek imkanı</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-md-4 animate__animated animate__fadeInUp">
+            <div class="feature-card text-center p-4">
+                <i class="fas fa-chart-line feature-icon mb-3"></i>
+                <h3>Gelişim Takibi</h3>
+                <p>Düzenli raporlar ve ilerleme grafikleri ile çocuğunuzun gelişimini takip edin</p>
             </div>
         </div>
-    </div>
-
-    <!-- How It Works Section -->
-    <div class="how-it-works-section py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Nasıl Çalışır?</h2>
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="step text-center">
-                        <div class="step-number">1</div>
-                        <h4>Kayıt Olun</h4>
-                        <p>Hızlı ve kolay kayıt işlemi ile platformumuza üye olun</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="step text-center">
-                        <div class="step-number">2</div>
-                        <h4>Profil Oluşturun</h4>
-                        <p>Çocuğunuzun ihtiyaçlarına göre profil bilgilerini doldurun</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="step text-center">
-                        <div class="step-number">3</div>
-                        <h4>Program Seçin</h4>
-                        <p>Size özel hazırlanmış eğitim programlarından uygun olanı seçin</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="step text-center">
-                        <div class="step-number">4</div>
-                        <h4>Eğitime Başlayın</h4>
-                        <p>Hemen eğitimlere başlayın ve gelişimi takip edin</p>
-                    </div>
-                </div>
+        <div class="col-md-4 animate__animated animate__fadeInRight">
+            <div class="feature-card text-center p-4">
+                <i class="fas fa-users feature-icon mb-3"></i>
+                <h3>Uzman Desteği</h3>
+                <p>Alanında uzman eğitmenlerden sürekli destek ve rehberlik</p>
             </div>
-        </div>
-    </div>
-
-    <!-- Call to Action Section -->
-    <div class="cta-section py-5 bg-primary text-white">
-        <div class="container text-center">
-            <h2 class="mb-4">Hemen Ücretsiz Deneyin</h2>
-            <p class="lead mb-4">Çocuğunuzun gelişimine katkıda bulunmak için ilk adımı atın</p>
-            <a asp-controller="Account" asp-action="Register" class="btn btn-light btn-lg">
-                <i class="fas fa-rocket me-2"></i>Şimdi Başlayın
-            </a>
         </div>
     </div>
 </div>
+
+<div class="cta-section text-center py-5 animate__animated animate__fadeIn">
+    <h2 class="mb-4">Hemen Başlayın</h2>
+    <p class="lead mb-4">Çocuğunuzun eğitim yolculuğunda yanınızdayız</p>
+    <div class="d-flex justify-content-center gap-3">
+        <a href="/Account/Register" class="btn btn-success btn-lg">Ücretsiz Kayıt Ol</a>
+        <a href="/Home/About" class="btn btn-outline-primary btn-lg">Daha Fazla Bilgi</a>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        color: white;
+        padding: 4rem 0;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        color: #2193b0;
+    }
+
+    .cta-section {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 3rem;
+        margin-top: 2rem;
+    }
+
+    .btn-lg {
+        padding: 1rem 2rem;
+        border-radius: 30px;
+    }
+</style>
 
 @section Scripts {
     <script>
